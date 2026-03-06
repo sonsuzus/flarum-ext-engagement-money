@@ -1,0 +1,36 @@
+{
+  "name": "sonsuzus/flarum-ext-engagement-money",
+  "description": "Rewards users for likes given and best answer actions using AntoineFr Money.",
+  "type": "flarum-extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ufuk",
+      "email": "sonsuzus@gmail.com",
+      "homepage": "https://sonsuz.us",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "flarum/core": "^1.8",
+    "antoinefr/flarum-ext-money": "*",
+    "flarum/likes": "*",
+    "fof/best-answer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sonsuzus\\EngagementMoney\\": "src/"
+    }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "Sonsuzus Engagement Money",
+      "icon": {
+        "name": "fas fa-coins",
+        "backgroundColor": "#8e44ad",
+        "color": "#ffffff"
+      }
+    }
+  }
+}
