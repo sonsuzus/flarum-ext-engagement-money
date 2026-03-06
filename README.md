@@ -140,6 +140,3 @@ Possible future improvements:
 * Daily reward limits
 * Leaderboard integration
 * Gamification features
-
-da hazırlayabilirim.
-Böyle olunca eklenti baya **“gerçek bir açık kaynak projesi” gibi** görünür.
