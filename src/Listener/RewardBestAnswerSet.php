@@ -28,7 +28,7 @@ class RewardBestAnswerSet
         $answerKey = 'best_answer_owner:' . $discussion->id . ':' . $post->id;
 
         if (!RewardLog::where('unique_key', $answerKey)->exists()) {
-            $this->money->add($answerOwner, 10);
+            $this->money->add($answerOwner, 20);
 
             RewardLog::create([
                 'type' => 'best_answer',
@@ -36,7 +36,7 @@ class RewardBestAnswerSet
                 'post_id' => $post->id,
                 'actor_user_id' => $actor->id,
                 'target_user_id' => $answerOwner->id,
-                'amount' => 10,
+                'amount' => 20,
                 'unique_key' => $answerKey,
             ]);
         }
