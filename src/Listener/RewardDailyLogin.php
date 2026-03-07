@@ -20,7 +20,7 @@ class RewardDailyLogin
             return;
         }
 
-        $rewardAmount = 2;
+        $rewardAmount = 5;
         $today = date('Y-m-d');
 
         $uniqueKey = 'daily_login:' . $user->id . ':' . $today;
