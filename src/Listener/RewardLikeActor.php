@@ -21,7 +21,7 @@ class RewardLikeActor
             return;
         }
 
-        // İstersen burada kendi postunu beğenmeye ödül verme:
+        // Kendi postunu beğenmeye ödül verme
         if ((int) $actor->id === (int) $post->user_id) {
             return;
         }
