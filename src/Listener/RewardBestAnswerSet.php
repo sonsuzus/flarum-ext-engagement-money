@@ -22,8 +22,9 @@ class RewardBestAnswerSet
             return;
         }
 
-        // 1) En iyi cevap sahibi +10
         $answerOwner = $post->user;
+
+        // En iyi cevap sahibine +10
         $answerKey = 'best_answer_owner:' . $discussion->id . ':' . $post->id;
 
         if (!RewardLog::where('unique_key', $answerKey)->exists()) {
@@ -40,7 +41,7 @@ class RewardBestAnswerSet
             ]);
         }
 
-        // 2) Seçen kişiye +5, ama kendi yorumunu seçiyorsa verme
+        // Seçen kişiye +5, ama kendi yorumunu seçiyorsa verme
         if ((int) $actor->id !== (int) $answerOwner->id) {
             $selectorKey = 'best_answer_selector:' . $discussion->id . ':' . $post->id . ':' . $actor->id;
 
