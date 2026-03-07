@@ -20,7 +20,7 @@ class RewardUserRegistration
             return;
         }
 
-        $rewardAmount = 20;
+        $rewardAmount = 50;
 
         $uniqueKey = 'user_registered:' . $user->id;
 
