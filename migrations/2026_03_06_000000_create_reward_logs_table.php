@@ -8,15 +8,12 @@ return [
         if (!$schema->hasTable('sonsuz_reward_logs')) {
             $schema->create('sonsuz_reward_logs', function (Blueprint $table) {
                 $table->increments('id');
-
-                $table->string('type', 50); // like_given, best_answer
+                $table->string('type', 50); // like_given, best_answer, user_registered, daily_login
                 $table->unsignedInteger('discussion_id')->nullable();
                 $table->unsignedInteger('post_id')->nullable();
-
-                $table->unsignedInteger('actor_user_id')->nullable();   // işlemi yapan
-                $table->unsignedInteger('target_user_id')->nullable();  // ödülü alan kişi
+                $table->unsignedInteger('actor_user_id')->nullable();
+                $table->unsignedInteger('target_user_id')->nullable();
                 $table->decimal('amount', 12, 2)->default(0);
-
                 $table->string('unique_key', 191)->unique();
                 $table->timestamps();
             });
