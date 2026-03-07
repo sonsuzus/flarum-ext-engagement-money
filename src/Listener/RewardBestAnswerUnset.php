@@ -2,10 +2,10 @@
 
 namespace Sonsuzus\EngagementMoney\Listener;
 
+use Flarum\User\User;
 use FoF\BestAnswer\Events\BestAnswerUnset;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
 use Sonsuzus\EngagementMoney\Support\MoneyManager;
-use Flarum\User\User;
 
 class RewardBestAnswerUnset
 {
