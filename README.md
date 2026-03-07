@@ -15,7 +15,7 @@ This extension rewards users for the following actions:
 | Action | Reward |
 |-----------------------------|--------:|
 | Giving a like | **+1** |
-| Being selected as Best Answer | **+10** |
+| Being selected as Best Answer | **+20** |
 | Selecting a Best Answer | **+5** |
 | Registering an account | **+50** |
 | Daily login | **+5** |
