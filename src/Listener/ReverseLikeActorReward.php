@@ -2,17 +2,17 @@
 
 namespace Sonsuzus\EngagementMoney\Listener;
 
-use Flarum\Likes\Event\PostWasLiked;
+use Flarum\Likes\Event\PostWasUnliked;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
 use Sonsuzus\EngagementMoney\Support\MoneyManager;
 
-class RewardLikeActor
+class ReverseLikeActorReward
 {
     public function __construct(protected MoneyManager $money)
     {
     }
 
-    public function handle(PostWasLiked $event): void
+    public function handle(PostWasUnliked $event): void
     {
         $actor = $event->actor;
         $post = $event->post;
@@ -21,27 +21,15 @@ class RewardLikeActor
             return;
         }
 
-        // Kendi postunu beğenmeye ödül verme
-        if ((int) $actor->id === (int) $post->user_id) {
-            return;
-        }
-
         $uniqueKey = 'like_given:' . $post->id . ':' . $actor->id;
 
-        if (RewardLog::where('unique_key', $uniqueKey)->exists()) {
+        $log = RewardLog::where('unique_key', $uniqueKey)->first();
+
+        if (!$log) {
             return;
         }
 
-        $this->money->add($actor, 1);
-
-        RewardLog::create([
-            'type' => 'like_given',
-            'discussion_id' => $post->discussion_id,
-            'post_id' => $post->id,
-            'actor_user_id' => $actor->id,
-            'target_user_id' => $actor->id,
-            'amount' => 1,
-            'unique_key' => $uniqueKey,
-        ]);
+        $this->money->subtract($actor, (float) $log->amount);
+        $log->delete();
     }
 }
