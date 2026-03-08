@@ -1,0 +1,8 @@
+sonsuzus-engagement-money:
+  admin:
+    settings:
+      reward_like: Beğeni Verildiğinde Kazanılan Puan
+      reward_best_answer_owner: En İyi Cevap Seçildiğinde (Cevap Sahibine) Verilecek Puan
+      reward_best_answer_selector: En İyi Cevap Seçen Kişiye Verilecek Puan
+      reward_registration: Yeni Kayıt Ödülü
+      reward_daily_login: Günlük Giriş Ödülü

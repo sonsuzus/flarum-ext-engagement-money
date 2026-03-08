@@ -3,13 +3,16 @@
 namespace Sonsuzus\EngagementMoney\Listener;
 
 use FoF\BestAnswer\Events\BestAnswerSet;
+use Flarum\Settings\SettingsRepositoryInterface;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
 use Sonsuzus\EngagementMoney\Support\MoneyManager;
 
 class RewardBestAnswerSet
 {
-    public function __construct(protected MoneyManager $money)
-    {
+    public function __construct(
+        protected MoneyManager $money,
+        protected SettingsRepositoryInterface $settings
+    ) {
     }
 
     public function handle(BestAnswerSet $event): void
@@ -24,29 +27,34 @@ class RewardBestAnswerSet
 
         $answerOwner = $post->user;
 
-        // En iyi cevap sahibine +10
-        $answerKey = 'best_answer_owner:' . $discussion->id . ':' . $post->id;
+        $ownerReward = (float) $this->settings->get('sonsuzus-engagement-money.reward_best_answer_owner', 20);
+        $selectorReward = (float) $this->settings->get('sonsuzus-engagement-money.reward_best_answer_selector', 5);
 
-        if (!RewardLog::where('unique_key', $answerKey)->exists()) {
-            $this->money->add($answerOwner, 20);
+        // En iyi cevap sahibine ödül
+        if ($ownerReward > 0) {
+            $answerKey = 'best_answer_owner:' . $discussion->id . ':' . $post->id;
 
-            RewardLog::create([
-                'type' => 'best_answer',
-                'discussion_id' => $discussion->id,
-                'post_id' => $post->id,
-                'actor_user_id' => $actor->id,
-                'target_user_id' => $answerOwner->id,
-                'amount' => 20,
-                'unique_key' => $answerKey,
-            ]);
+            if (!RewardLog::where('unique_key', $answerKey)->exists()) {
+                $this->money->add($answerOwner, $ownerReward);
+
+                RewardLog::create([
+                    'type' => 'best_answer',
+                    'discussion_id' => $discussion->id,
+                    'post_id' => $post->id,
+                    'actor_user_id' => $actor->id,
+                    'target_user_id' => $answerOwner->id,
+                    'amount' => $ownerReward,
+                    'unique_key' => $answerKey,
+                ]);
+            }
         }
 
-        // Seçen kişiye +5, ama kendi yorumunu seçiyorsa verme
-        if ((int) $actor->id !== (int) $answerOwner->id) {
+        // Seçen kişiye ödül (Kendi yorumunu seçiyorsa verme)
+        if ($selectorReward > 0 && (int) $actor->id !== (int) $answerOwner->id) {
             $selectorKey = 'best_answer_selector:' . $discussion->id . ':' . $post->id . ':' . $actor->id;
 
             if (!RewardLog::where('unique_key', $selectorKey)->exists()) {
-                $this->money->add($actor, 5);
+                $this->money->add($actor, $selectorReward);
 
                 RewardLog::create([
                     'type' => 'best_answer',
@@ -54,7 +62,7 @@ class RewardBestAnswerSet
                     'post_id' => $post->id,
                     'actor_user_id' => $actor->id,
                     'target_user_id' => $actor->id,
-                    'amount' => 5,
+                    'amount' => $selectorReward,
                     'unique_key' => $selectorKey,
                 ]);
             }

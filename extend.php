@@ -17,6 +17,21 @@ use Sonsuzus\EngagementMoney\Listener\RewardLikeActor;
 use Sonsuzus\EngagementMoney\Listener\RewardUserRegistration;
 
 return [
+    // 1. Admin arayüzü için derlenmiş JS dosyası
+    (new Extend\Frontend('admin'))
+        ->js(__DIR__.'/js/dist/admin.js'),
+
+    // 2. Çeviri (dil) dosyalarının eklendiği dizin
+    new Extend\Locales(__DIR__ . '/locale'),
+
+    // 3. Ayarların varsayılan değerleri
+    (new Extend\Settings())
+        ->default('sonsuzus-engagement-money.reward_like', 1)
+        ->default('sonsuzus-engagement-money.reward_best_answer_owner', 20)
+        ->default('sonsuzus-engagement-money.reward_best_answer_selector', 5)
+        ->default('sonsuzus-engagement-money.reward_registration', 50)
+        ->default('sonsuzus-engagement-money.reward_daily_login', 5),
+
     (new Extend\Event())
         ->listen(PostWasLiked::class, RewardLikeActor::class)
         ->listen(PostWasUnliked::class, ReverseLikeActorReward::class)

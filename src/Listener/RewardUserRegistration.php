@@ -3,13 +3,16 @@
 namespace Sonsuzus\EngagementMoney\Listener;
 
 use Flarum\User\Event\Registered;
+use Flarum\Settings\SettingsRepositoryInterface;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
 use Sonsuzus\EngagementMoney\Support\MoneyManager;
 
 class RewardUserRegistration
 {
-    public function __construct(protected MoneyManager $money)
-    {
+    public function __construct(
+        protected MoneyManager $money,
+        protected SettingsRepositoryInterface $settings
+    ) {
     }
 
     public function handle(Registered $event): void
@@ -20,7 +23,11 @@ class RewardUserRegistration
             return;
         }
 
-        $rewardAmount = 50;
+        $rewardAmount = (float) $this->settings->get('sonsuzus-engagement-money.reward_registration', 50);
+
+        if ($rewardAmount <= 0) {
+            return;
+        }
 
         $uniqueKey = 'user_registered:' . $user->id;
 

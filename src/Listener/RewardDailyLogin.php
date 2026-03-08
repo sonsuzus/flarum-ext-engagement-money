@@ -3,13 +3,16 @@
 namespace Sonsuzus\EngagementMoney\Listener;
 
 use Flarum\User\Event\LoggedIn;
+use Flarum\Settings\SettingsRepositoryInterface;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
 use Sonsuzus\EngagementMoney\Support\MoneyManager;
 
 class RewardDailyLogin
 {
-    public function __construct(protected MoneyManager $money)
-    {
+    public function __construct(
+        protected MoneyManager $money,
+        protected SettingsRepositoryInterface $settings
+    ) {
     }
 
     public function handle(LoggedIn $event): void
@@ -20,9 +23,13 @@ class RewardDailyLogin
             return;
         }
 
-        $rewardAmount = 5;
-        $today = date('Y-m-d');
+        $rewardAmount = (float) $this->settings->get('sonsuzus-engagement-money.reward_daily_login', 5);
 
+        if ($rewardAmount <= 0) {
+            return;
+        }
+
+        $today = date('Y-m-d');
         $uniqueKey = 'daily_login:' . $user->id . ':' . $today;
 
         if (RewardLog::where('unique_key', $uniqueKey)->exists()) {
