@@ -31,7 +31,6 @@
         "backgroundColor": "#8e44ad",
         "color": "#ffffff"
       },
-      ,
       "optional-dependencies": [
         "antoinefr/flarum-ext-money",
         "flarum/likes",
