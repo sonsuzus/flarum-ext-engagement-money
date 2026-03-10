@@ -48,3 +48,4 @@ php flarum cache:clear
 ## 🔗 Links
 - [Packagist](https://packagist.org/packages/sonsuzus/flarum-ext-engagement-money)
 - [GitHub](https://github.com/sonsuzus/flarum-ext-engagement-money)
+- [Discuss](https://discuss.flarum.org/d/38868-flarum-engagement-money-like-best-answer-register-daily-login)
