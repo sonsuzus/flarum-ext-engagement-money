@@ -12,11 +12,8 @@
     }
   ],
   "require": {
-    "php": "^8.0",
-    "flarum/core": "^1.8",
-    "antoinefr/flarum-ext-money": "*",
-    "flarum/likes": "*",
-    "fof/best-answer": "*"
+    "php": "^8.2",
+    "flarum/core": "^2.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -26,6 +23,7 @@
   "extra": {
     "flarum-extension": {
       "title": "Sonsuzus Engagement Money",
+      "category": "feature",
       "icon": {
         "name": "fas fa-coins",
         "backgroundColor": "#8e44ad",

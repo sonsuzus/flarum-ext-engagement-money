@@ -17,7 +17,9 @@ class MoneyManager
         $user->money = (float) $user->money + $amount;
         $user->save();
 
-        $this->events->dispatch(new MoneyUpdated($user));
+        if (class_exists(MoneyUpdated::class)) {
+            $this->events->dispatch(new MoneyUpdated($user));
+        }
     }
 
     public function subtract(User $user, float $amount): void
@@ -25,6 +27,8 @@ class MoneyManager
         $user->money = (float) $user->money - $amount;
         $user->save();
 
-        $this->events->dispatch(new MoneyUpdated($user));
+        if (class_exists(MoneyUpdated::class)) {
+            $this->events->dispatch(new MoneyUpdated($user));
+        }
     }
 }
