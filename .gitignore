@@ -1,0 +1,15 @@
+# Dependencies
+/vendor/
+/js/node_modules/
+/js/package-lock.json
+
+# Build outputs (Sadece ham kaynak kodları takip etmek istiyorsan dist klasörünü de hariç tutabilirsin)
+/js/dist/
+
+# Flarum & IDE & OS specific
+composer.lock
+.DS_Store
+.idea/
+.vscode/
+storage/
+*.log
