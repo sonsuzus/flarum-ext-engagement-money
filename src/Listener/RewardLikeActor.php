@@ -17,7 +17,7 @@ class RewardLikeActor
 
     public function handle(PostWasLiked $event): void
     {
-        $actor = $event->actor;
+        $actor = $event->user;
         $post = $event->post;
 
         if (!$actor || !$post) {

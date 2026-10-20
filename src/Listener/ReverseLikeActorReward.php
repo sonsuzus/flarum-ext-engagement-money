@@ -14,7 +14,7 @@ class ReverseLikeActorReward
 
     public function handle(PostWasUnliked $event): void
     {
-        $actor = $event->actor;
+        $actor = $event->user;
         $post = $event->post;
 
         if (!$actor || !$post) {
