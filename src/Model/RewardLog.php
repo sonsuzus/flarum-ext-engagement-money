@@ -8,6 +8,8 @@ class RewardLog extends AbstractModel
 {
     protected $table = 'sonsuz_reward_logs';
 
+    public $timestamps = true;
+
     protected $fillable = [
         'type',
         'discussion_id',

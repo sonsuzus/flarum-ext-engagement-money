@@ -27,6 +27,7 @@ return [
     // 3. Ayarların varsayılan değerleri
     (new Extend\Settings())
         ->default('sonsuzus-engagement-money.reward_like', 1)
+        ->default('sonsuzus-engagement-money.daily_like_limit', 50)
         ->default('sonsuzus-engagement-money.reward_best_answer_owner', 20)
         ->default('sonsuzus-engagement-money.reward_best_answer_selector', 5)
         ->default('sonsuzus-engagement-money.reward_registration', 50)

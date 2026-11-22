@@ -11,6 +11,13 @@ export default [
       type: 'number',
     }))
     .setting(() => ({
+      setting: 'sonsuzus-engagement-money.daily_like_limit',
+      label: app.translator.trans(transPrefix + 'daily_like_limit'),
+      help: app.translator.trans(transPrefix + 'daily_like_limit_help'),
+      type: 'number',
+      min: 0,
+    }))
+    .setting(() => ({
       setting: 'sonsuzus-engagement-money.reward_best_answer_owner',
       label: app.translator.trans(transPrefix + 'reward_best_answer_owner'),
       type: 'number',

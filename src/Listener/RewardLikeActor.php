@@ -2,6 +2,7 @@
 
 namespace Sonsuzus\EngagementMoney\Listener;
 
+use Carbon\Carbon;
 use Flarum\Likes\Event\PostWasLiked;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Sonsuzus\EngagementMoney\Model\RewardLog;
@@ -24,8 +25,15 @@ class RewardLikeActor
             return;
         }
 
-        // Kendi postunu beğenmeye ödül verme
-        if ((int) $actor->id === (int) $post->user_id) {
+        // Kendi gönderisini beğenmeye ödül verme
+        if ($post->user_id !== null && (int) $actor->id === (int) $post->user_id) {
+            return;
+        }
+
+        // Ödül miktarı 0 veya altındaysa işlemi atla
+        $rewardAmount = (float) $this->settings->get('sonsuzus-engagement-money.reward_like', 1);
+
+        if ($rewardAmount <= 0) {
             return;
         }
 
@@ -35,12 +43,18 @@ class RewardLikeActor
             return;
         }
 
-        // Veritabanından değeri oku, yoksa varsayılan olarak 1 al
-        $rewardAmount = (float) $this->settings->get('sonsuzus-engagement-money.reward_like', 1);
+        // Günlük beğeni ödülü limiti kontrolü (0 = sınırsız)
+        $dailyLimit = (int) $this->settings->get('sonsuzus-engagement-money.daily_like_limit', 50);
 
-        // Değer 0 veya altındaysa ödül sistemini atla (kapatma işlevi görür)
-        if ($rewardAmount <= 0) {
-            return;
+        if ($dailyLimit > 0) {
+            $todayCount = RewardLog::where('type', 'like_given')
+                ->where('actor_user_id', $actor->id)
+                ->where('created_at', '>=', Carbon::today())
+                ->count();
+
+            if ($todayCount >= $dailyLimit) {
+                return;
+            }
         }
 
         $this->money->add($actor, $rewardAmount);

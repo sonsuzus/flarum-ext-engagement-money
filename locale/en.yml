@@ -2,6 +2,8 @@ sonsuzus-engagement-money:
   admin:
     settings:
       reward_like: Reward for giving a Like
+      daily_like_limit: Daily Like Reward Limit
+      daily_like_limit_help: Maximum number of likes per day that grant a reward (0 = unlimited).
       reward_best_answer_owner: Reward for getting a Best Answer
       reward_best_answer_selector: Reward for selecting a Best Answer
       reward_registration: Reward for user registration
